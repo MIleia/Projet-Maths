@@ -7,3 +7,6 @@ def calcul(N):
         sum += i
     end = time.time()
     return end-start
+
+
+print(calcul(10000000))
