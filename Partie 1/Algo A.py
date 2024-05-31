@@ -62,3 +62,38 @@ objets = [
     ("Arrache Manivelle", 0.4, 0)
 ]
 
+
+def exact(objects, capacity):
+    n = len(objects)
+    # Initialiser la matrice de programmation dynamique
+    dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
+
+    # Remplir la matrice
+    for i in range(1, n + 1):
+        for w in range(1, capacity + 1):
+            if objects[i - 1][1] * 100 <= w:
+                dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - int(objects[i - 1][1] * 100)] + objects[i - 1][2])
+            else:
+                dp[i][w] = dp[i - 1][w]
+
+    # Retrouver les objets sélectionnés
+    selected_objects = []
+    i, w = n, capacity
+    while i > 0 and w > 0:
+        if dp[i][w] != dp[i - 1][w]:
+            selected_objects.append(objects[i - 1])
+            w -= int(objects[i - 1][1] * 100)
+        i -= 1
+
+    return selected_objects, dp[n][capacity]
+
+# Appel de la fonction exact avec les objets et la capacité maximale
+selected_objects, total_utility = exact(objects, int(0.6 * 100))
+
+# Affichage des objets sélectionnés et l'utilité totale
+print("Objets sélectionnés :")
+for obj in selected_objects:
+    print(obj[0])
+print("Utilité totale :", total_utility)
+
+
