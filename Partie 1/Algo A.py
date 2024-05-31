@@ -1,5 +1,11 @@
+
+
+
+
+
+
 # Définition des objets
-objects = [
+objets = [
     ("Rustines", 0.05, 1.5),
     ("Maillon rapide", 0.05, 1.4),
     ("Démonte-pneus", 0.1, 1.5),
