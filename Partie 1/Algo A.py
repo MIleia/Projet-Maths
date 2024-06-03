@@ -35,7 +35,7 @@ def exact(objects, capacite):
     capacite = capacite * 100
 
     # Parcours de toutes les combinaisons possibles
-    for i in range(1 << n):
+    for i in range(2**n):
         utilite = 0
         poids = 0
         objects_selectiones = []
@@ -62,5 +62,4 @@ print("Objets sélectionnés :")
 for obj in selected_objects:
     print(obj[0])
 print("Utilité totale :", total_utility)
-
 
