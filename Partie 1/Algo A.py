@@ -1,11 +1,5 @@
-
-
-
-
-
-
 # Définition des objets
-objets = [
+objects = [
     ("Rustines", 0.05, 1.5),
     ("Maillon rapide", 0.05, 1.4),
     ("Démonte-pneus", 0.1, 1.5),
@@ -32,34 +26,38 @@ objets = [
 ]
 
 
-def exact(objects, capacity):
+def exact(objects, capacite):
     n = len(objects)
-    # Initialiser la matrice de programmation dynamique
-    dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
+    meilleure_utilite = 0
+    meilleurs_objects = []
 
-    # Remplir la matrice
-    for i in range(1, n + 1):
-        for w in range(1, capacity + 1):
-            if objects[i - 1][1] * 100 <= w:
-                dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - int(objects[i - 1][1] * 100)] + objects[i - 1][2])
-            else:
-                dp[i][w] = dp[i - 1][w]
+    # Convertir la capacité et les poids en entiers pour éviter les problèmes de précision des flottants
+    capacite = capacite * 100
 
-    # Retrouver les objets sélectionnés
-    selected_objects = []
-    i, w = n, capacity
-    while i > 0 and w > 0:
-        if dp[i][w] != dp[i - 1][w]:
-            selected_objects.append(objects[i - 1])
-            w -= int(objects[i - 1][1] * 100)
-        i -= 1
+    # Parcours de toutes les combinaisons possibles
+    for i in range(1 << n):
+        utilite = 0
+        poids = 0
+        objects_selectiones = []
+        for j in range(n):
+            if i & (1 << j):
+                poids += objects[j][1] * 100
+                utilite += objects[j][2]
+                objects_selectiones.append(objects[j])
 
-    return selected_objects, dp[n][capacity]
+        # Comparaison entre la solution actuelle et la meilleure solution trouvée
+        if poids <= capacite and utilite > meilleure_utilite:
+            meilleure_utilite = utilite
+            meilleurs_objects = objects_selectiones
 
-# Appel de la fonction exact avec les objets et la capacité maximale
-selected_objects, total_utility = exact(objects, int(0.6 * 100))
+    return meilleurs_objects, meilleure_utilite
 
-# Affichage des objets sélectionnés et l'utilité totale
+
+
+# Appel de la fonction exact
+selected_objects, total_utility = exact(objects, 0.6)
+
+# Affichage des objets sélectionnés ainsi que l'utilité totale
 print("Objets sélectionnés :")
 for obj in selected_objects:
     print(obj[0])
