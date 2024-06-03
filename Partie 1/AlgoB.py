@@ -39,23 +39,38 @@ def algoB(objects, capacite):
     sacFinal=[]
     i=0
     nbrObjets=0
-    while poids<capacite:
+    while (poids<capacite) and (nbrObjets<n):
         maxUtilPoids=0
         for i in range(n-nbrObjets):
             if utilPoids[i]>maxUtilPoids:
                 maxUtilPoids=utilPoids[i]
                 maxIndex=i
-        sacFinal.append(objects[maxIndex])
-        poids+=objects[maxIndex][1]
-        utilite+=objects[maxIndex][2]
-        objects.pop(maxIndex)
-        utilPoids.pop(maxIndex)
-        i=0
-        nbrObjets+=1
+        if poids+objects[maxIndex][1]>capacite:
+            objects.pop(maxIndex)
+            utilPoids.pop(maxIndex)
+            i = 0
+            nbrObjets += 1
+        else:
+            sacFinal.append(objects[maxIndex])
+            poids+=objects[maxIndex][1]
+            utilite+=objects[maxIndex][2]
+            objects.pop(maxIndex)
+            utilPoids.pop(maxIndex)
+            i=0
+            nbrObjets+=1
 
 
     return sacFinal
 
 
 
-print(algoB(objects, 0.4))
+temp=algoB(objects, 2)
+utiliteTot=0
+poidsTot=0
+for i in range (len(temp)):
+    utiliteTot=temp[i][2]+utiliteTot
+    poidsTot=temp[i][1]+poidsTot
+    print(temp[i][0])
+
+print("Utilité totale : ", utiliteTot)
+print("Poids total : ", poidsTot)
