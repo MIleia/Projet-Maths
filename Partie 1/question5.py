@@ -9,4 +9,17 @@ def calcul(N):
     return end-start
 
 
-print(calcul(10000000))
+print(calcul(8388608))
+
+
+def algoA(objet,poidsMax):
+    prendre=[]
+    sacTemp=[]
+    poids=0
+    terminé=False
+    i = 0
+    while terminé!=True:
+        j=i+1
+        for i in range(len(objet)):
+            for j in range(len(objet)):
+                if poids+objet[]>poidsMax
