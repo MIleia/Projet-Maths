@@ -36,9 +36,12 @@ def onlineDim1V2():
             decalage+=1
         else :
             conteneur.append(longueur)
+    #print("Le nombre de conteneurs est de ", len(conteneur) - 1)
+    #print("Les longueurs des conteneurs sont ", conteneur[0:])
 
-    print("Le nombre de conteneurs est de ", len(conteneur) - 1)
-    print("Les longueurs des conteneurs sont ", conteneur[1:])
+    return conteneur
+
+
 
 
 
@@ -57,7 +60,7 @@ def onlineDim1():
             conteneur.append(longueur)
 
     print("Le nombre de conteneurs est de ",len(conteneur)-1)
-    print("Les longueurs des conteneurs sont ",conteneur[1:])
+    print("Les longueurs des conteneurs sont ",conteneur[0:])
 
 def onlineDim2():
     conteneurs = [(0, 0)]  # Liste de tuples représentant (longueur, largeur)
