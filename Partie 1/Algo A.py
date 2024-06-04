@@ -28,11 +28,16 @@ objects = [
 ]
 
 
+# Fonction récursive de la résolution exacte
 def exact_recursive(objects, capacite, index=0, current_subset=[], current_poids=0, current_utilite=0):
+    # Utilisation de variables globales
     global meilleure_utilite, meilleurs_objects
 
+    # Condition d'arrêt
     if index == len(objects):
+        # Comparaison entre la solution actuelle et la meilleure solution trouvée en terme d'utilité
         if current_poids <= capacite and current_utilite > meilleure_utilite:
+            # Mise à jour de la meilleure solution
             meilleure_utilite = current_utilite
             meilleurs_objects = current_subset.copy()
         return
@@ -41,6 +46,7 @@ def exact_recursive(objects, capacite, index=0, current_subset=[], current_poids
     next_poids = current_poids + int(objects[index][1] * 100)
     next_utilite = current_utilite + objects[index][2]
 
+    # Comparaison entre la solution actuelle et la meilleure solution trouvée en terme d'utilité
     if next_poids <= capacite:
         exact_recursive(objects, capacite, index + 1, current_subset + [objects[index]], next_poids, next_utilite)
 
@@ -49,20 +55,37 @@ def exact_recursive(objects, capacite, index=0, current_subset=[], current_poids
 
 
 def exact(objects, capacite):
+    # Utilisation de variables globales
     global meilleure_utilite, meilleurs_objects
+
+    # Initialisation des variables globales
     meilleure_utilite = 0
     meilleurs_objects = []
-    capacite = int(capacite * 100)  # Convertir la capacité en centièmes pour éviter les problèmes de flottants
 
+    # Convertion de la capacité pour éviter les problèmes de flottants
+    capacite = int(capacite * 100)
+
+
+    # 1 ère mesure du temps
     start = time.time()
+
+    # Appel de la fonction récursive
     exact_recursive(objects, capacite)
+
+    # 2 ème mesure du temps
     end = time.time()
 
+
+    # Affichage du temps d'exécution
     print("Temps : ", end - start)
+
+    # Calcul de la masse restante
     masse_restante = capacite - sum(objet[1] * 100 for objet in meilleurs_objects)
-    masse_restante /= 100  # Convertir la masse restante en unités d'origine
+    # Convertion de la masse restante en unités d'origine
+    masse_restante /= 100
 
     return meilleurs_objects, meilleure_utilite, masse_restante
+
 
 
 # Appel de la fonction exact
@@ -72,6 +95,8 @@ selected_objects, total_utility, masse = exact(objects, 0.8)
 print("Objets sélectionnés :")
 for obj in selected_objects:
     print(obj[0])
+
+# Affichage de l'utilité totale et de la masse restante
 print("Utilité totale :", total_utility)
 print("Masse restante :", masse)
 
