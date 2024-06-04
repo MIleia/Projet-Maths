@@ -43,20 +43,38 @@ def offlineDim1():
             utilise[i]=1
             res.append(tableau[i][0])
             index=0
-            for j in range(i,len(tableau)):
-                if utilise[j]==1:
-                    j+=1
-                elif maxTemp+ tableau[j][0] <lmax and maxTemp+tableau[j][0]>maxTemp2:
-                    if rajoute==False:
-                        maxTemp2=maxTemp2+tableau[j][0]
+
+            fin=False
+            j = 0
+            ite=0
+            while fin == False:
+                if utilise[j] == 1:
+                    ite+=1
+                elif maxTemp2+ tableau[j][0] <= lmax:
+                    maxTemp2 = maxTemp2 + tableau[j][0]
+                    res.append(tableau[j][0])
+                    utilise[j]=1
+                    ite=0
+                elif maxTemp + tableau[j][0] <= lmax and maxTemp + tableau[j][0] > maxTemp2 and maxTemp2 + tableau[j][0] <= lmax:
+                    if rajoute == False:
+
+                        maxTemp2 = maxTemp2 + tableau[j][0]
                         res.append(tableau[j][0])
-                        rajoute=True
-                        index=j
+                        rajoute = True
+                        index = j
+                        ite=0
                     else:
                         res.pop()
                         maxTemp2 = maxTemp2 + tableau[j][0]
                         res.append(tableau[j][0])
-                        index=j
+                        index = j
+
+                        ite=0
+                j += 1
+                if j==len(tableau):
+                    j=0
+                if ite==len(tableau):
+                    fin=True
             utilise[index]=1
             resulat.append(res.copy())
             res.clear()
