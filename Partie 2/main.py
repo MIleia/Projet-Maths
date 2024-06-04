@@ -1,7 +1,9 @@
 tablongueur = [10,9,7.5,1,2,11,3,3,3,4,5,6,7,5,6,5,4,7,9,3,5,6,7,3,1,2,4,6,7,9,6,3,3,4,5,6,6,7,6,7,8,8,8,5,2.2,4.2,3.7,5.6,4.9,8.7,6.1,3.3,2.6,2.9,2,3,6,5,4,6,4,2,4,6,6,3,4,4,2,6,2,4,5,5,4,6,3,3,3,5,5,6,5,3,5,6,6,3,5,3,4,3,3,5,3,4,4,2,2,6]
-lmax = 11.5
-Lmax = 2.2
-Hmax = 2.5
+lmax = 11.583
+Lmax = 2.294
+Hmax = 2.569
+
+
 
 tableau = [
     (10, 1, 0.5), (9, 2, 0.7), (7.5, 1.2, 0.4), (1, 1, 1), (2, 2, 1), (11, 1, 0.2),
@@ -22,6 +24,28 @@ tableau = [
     (4, 1.5, 1.7), (3, 1.5, 1.9), (3, 0.6, 1.9), (5, 1.8, 0.5), (3, 1.8, 0.7), (4, 1.7, 1.4),
     (4, 1.5, 0.5), (2, 2.1, 1.8), (2, 0.7, 1.1), (6, 1.2, 1.3)
 ]
+
+
+def onlineDim1V2():
+    conteneur = [tableau[0][0]]
+    decalage=0
+    for i in range(1,len(tableau)):
+        longueur = tableau[i][0]
+        if conteneur[i-decalage-1] + longueur <= lmax:
+            conteneur[i-decalage-1] += longueur
+            decalage+=1
+        else :
+            conteneur.append(longueur)
+    #print("Le nombre de conteneurs est de ", len(conteneur) - 1)
+    #print("Les longueurs des conteneurs sont ", conteneur[0:])
+
+    return conteneur
+
+
+
+
+
+onlineDim1V2()
 
 def onlineDim1():
     conteneur = [0]
