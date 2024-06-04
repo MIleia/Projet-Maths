@@ -97,7 +97,7 @@ for obj in selected_objects:
     print(obj[0])
 
 # Affichage de l'utilité totale et de la masse restante
-print("Utilité totale :", total_utility)
+print("Utilité totale :", round(total_utility, 3))
 print("Masse restante :", masse)
 
 
