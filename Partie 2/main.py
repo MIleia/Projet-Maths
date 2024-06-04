@@ -36,21 +36,29 @@ def offlineDim2():
         if utilise[i]==1:
             i+=1
         else:
-            maxTempl=tableau[i][0]
-            maxTemp2l=tableau[i][0]
+            maxTempl=[]
+            maxTempl.append(tableau[i][0])
+            maxTempL=[]
+            maxTempL.append(tableau[i][1])
+            maxTemp2l=[]
+            maxTemp2l.append(tableau[i][0])
+            maxTemp2L=[]
+            maxTemp2L.append(tableau[i][1])
             utilise[i]=1
-            res.append(tableau[i][0])
+            #res.append(tableau[i][0])
+            res.append(i+1)
             index=0
-
             fin=False
             j = 0
             ite=0
             while fin == False:
                 if utilise[j] == 1:
                     ite+=1
-                elif maxTemp2l+ tableau[j][0] <= lmax:
+                elif maxTemp2l+ tableau[j][0] <= lmax and :
                     maxTemp2l = maxTemp2l + tableau[j][0]
-                    res.append(tableau[j][0])
+
+                    #res.append(tableau[j][0])
+
                     utilise[j]=1
                     ite=0
                 elif maxTempl + tableau[j][0] <= lmax and maxTempl + tableau[j][0] > maxTemp2l and maxTemp2l + tableau[j][0] <= lmax:
