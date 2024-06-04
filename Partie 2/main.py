@@ -1,4 +1,4 @@
-#tablongueur = [10,9,7.5,1,2,11,3,3,3,4,5,6,7,5,6,5,4,7,9,3,5,6,7,3,1,2,4,6,7,9,6,3,3,4,5,6,6,7,6,7,8,8,8,5,2.2,4.2,3.7,5.6,4.9,8.7,6.1,3.3,2.6,2.9,2,3,6,5,4,6,4,2,4,6,6,3,4,4,2,6,2,4,5,5,4,6,3,3,3,5,5,6,5,3,5,6,6,3,5,3,4,3,3,5,3,4,4,2,2,6]
+tablongueur = [10,9,7.5,1,2,11,3,3,3,4,5,6,7,5,6,5,4,7,9,3,5,6,7,3,1,2,4,6,7,9,6,3,3,4,5,6,6,7,6,7,8,8,8,5,2.2,4.2,3.7,5.6,4.9,8.7,6.1,3.3,2.6,2.9,2,3,6,5,4,6,4,2,4,6,6,3,4,4,2,6,2,4,5,5,4,6,3,3,3,5,5,6,5,3,5,6,6,3,5,3,4,3,3,5,3,4,4,2,2,6]
 lmax = 11.5
 Lmax = 2.2
 Hmax = 2.5
@@ -35,8 +35,12 @@ def onlineDim1():
         if dispo:
             conteneur.append(longueur)
 
-    print("Le nombre de conteneurs est de ",len(conteneur)-1)
-    print("Les longueurs des conteneurs sont ",conteneur[1:])
+    print("Le nombre de conteneurs est de ",len(conteneur))
+    print("Les longueurs des conteneurs sont ",conteneur[0:])
+    dim = 0
+    for i in range(len(conteneur)):
+        dim += lmax - conteneur[i]
+    print("La dimension non occupée est de ",round(dim,2))
 
 def onlineDim2():
     conteneurs = [(0, 0)]  # Liste de tuples représentant (longueur, largeur)
@@ -57,7 +61,7 @@ def onlineDim2():
     print("Conteneurs après ajout des objets :")
     for conteneur in conteneurs:
         print(conteneur)
-    print("Nombre de conteneurs utilisés :", len(conteneurs) - 1)
+    print("Nombre de conteneurs utilisés :", len(conteneurs))
 
 def onlineDim3():
     conteneurs = [(0, 0, 0)]  # Liste de tuples représentant (longueur, largeur, hauteur)
@@ -78,7 +82,7 @@ def onlineDim3():
     print("Conteneurs après ajout des objets :")
     for conteneur in conteneurs:
         print(conteneur)
-    print("Nombre de conteneurs utilisés :", len(conteneurs) - 1)
+    print("Nombre de conteneurs utilisés :", len(conteneurs))
 
 onlineDim1()
 #onlineDim2()
