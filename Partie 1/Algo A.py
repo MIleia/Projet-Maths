@@ -89,7 +89,7 @@ def exact(objects, capacite):
 
 
 # Appel de la fonction exact
-selected_objects, total_utility, masse = exact(objects, 0.8)
+selected_objects, total_utility, masse_restante = exact(objects, 0.4)
 
 # Affichage des objets sélectionnés ainsi que l'utilité totale et la masse restante
 print("Objets sélectionnés :")
@@ -98,6 +98,6 @@ for obj in selected_objects:
 
 # Affichage de l'utilité totale et de la masse restante
 print("Utilité totale :", round(total_utility, 3))
-print("Masse restante :", masse)
+print("Masse restante :", masse_restante)
 
 
