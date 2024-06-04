@@ -76,13 +76,13 @@ def exact(objects, capacite):
     end = time.time()
 
 
-    # Affichage du temps d'exécution
-    print("Temps : ", end - start)
-
     # Calcul de la masse restante
     masse_restante = capacite - sum(objet[1] * 100 for objet in meilleurs_objects)
     # Convertion de la masse restante en unités d'origine
-    masse_restante /= 100
+    masse_restante = masse_restante / 100
+
+    # Affichage du temps d'exécution
+    print("Temps : ", end - start)
 
     return meilleurs_objects, meilleure_utilite, masse_restante
 
