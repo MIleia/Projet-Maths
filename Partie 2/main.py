@@ -64,50 +64,56 @@ def onlineDim1():
     dim = 0
     for i in range(len(conteneur)):
         dim += lmax - conteneur[i]
-    print("La dimension non occupée est de ",round(dim,2))
+    print("La dimension non occupée est de ",round(dim,3),"m")
 
 def onlineDim2():
-    conteneurs = [(0, 0)]  # Liste de tuples représentant (longueur, largeur)
+    conteneur = [(0, 0)]  # Liste de tuples représentant (longueur, largeur)
 
     # Ajout des objets aux conteneurs
     for longueur, largeur, h in tableau:
         dispo = True
-        for i in range(len(conteneurs)):
-            l, L = conteneurs[i]
+        for i in range(len(conteneur)):
+            l, L = conteneur[i]
             if l + longueur <= lmax and L + largeur <= Lmax:
-                conteneurs[i] = (l + longueur, L + largeur)
+                conteneur[i] = (l + longueur, L + largeur)
                 dispo = False
                 break
         if dispo:
-            conteneurs.append((longueur, largeur))
+            conteneur.append((longueur, largeur))
 
     # Affichage des conteneurs
-    print("Conteneurs après ajout des objets :")
-    for conteneur in conteneurs:
-        print(conteneur)
-    print("Nombre de conteneurs utilisés :", len(conteneurs))
+    print("Conteneurs après ajout des objets :", conteneur)
+    print("Nombre de conteneurs utilisés :", len(conteneur))
+    dim = 0
+    for i in range(len(conteneur)):
+        l, L = conteneur[i]
+        dim += lmax*Lmax - l*L
+    print("La dimension non occupée est de ",round(dim,3), "m²")
 
 def onlineDim3():
-    conteneurs = [(0, 0, 0)]  # Liste de tuples représentant (longueur, largeur, hauteur)
+    conteneur = [(0, 0, 0)]  # Liste de tuples représentant (longueur, largeur, hauteur)
 
     # Ajout des objets aux conteneurs
     for longueur, largeur, hauteur in tableau:
         dispo = True
-        for i in range(len(conteneurs)):
-            l, L, H = conteneurs[i]
+        for i in range(len(conteneur)):
+            l, L, H = conteneur[i]
             if l + longueur <= lmax and L + largeur <= Lmax and H + hauteur <= Hmax:
-                conteneurs[i] = (l + longueur, L + largeur, H + hauteur)
+                conteneur[i] = (l + longueur, L + largeur, H + hauteur)
                 dispo = False
                 break
         if dispo:
-            conteneurs.append((longueur, largeur, hauteur))
+            conteneur.append((longueur, largeur, hauteur))
 
     # Affichage des conteneurs
-    print("Conteneurs après ajout des objets :")
-    for conteneur in conteneurs:
-        print(conteneur)
-    print("Nombre de conteneurs utilisés :", len(conteneurs))
+    print("Conteneurs après ajout des objets :", conteneur)
+    print("Nombre de conteneurs utilisés :", len(conteneur))
+    dim = 0
+    for i in range(len(conteneur)):
+        l, L, H = conteneur[i]
+        dim += lmax*Lmax*Hmax - l*L*H
+    print("La dimension non occupée est de ",round(dim,3), "m³")
 
-onlineDim1()
+#onlineDim1()
 #onlineDim2()
 #onlineDim3()
