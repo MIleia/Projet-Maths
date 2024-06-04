@@ -1,3 +1,5 @@
+import time
+
 # Définition des objets
 objects = [
     ("Rustines", 0.05, 1.5),
@@ -26,40 +28,76 @@ objects = [
 ]
 
 
+# Fonction récursive de la résolution exacte
+def exact_recursive(objects, capacite, index=0, current_subset=[], current_poids=0, current_utilite=0):
+    # Utilisation de variables globales
+    global meilleure_utilite, meilleurs_objects
+
+    # Condition d'arrêt
+    if index == len(objects):
+        # Comparaison entre la solution actuelle et la meilleure solution trouvée en terme d'utilité
+        if current_poids <= capacite and current_utilite > meilleure_utilite:
+            # Mise à jour de la meilleure solution
+            meilleure_utilite = current_utilite
+            meilleurs_objects = current_subset.copy()
+        return
+
+    # Inclure l'objet à l'index actuel
+    next_poids = current_poids + int(objects[index][1] * 100)
+    next_utilite = current_utilite + objects[index][2]
+
+    # Comparaison entre la solution actuelle et la meilleure solution trouvée en terme d'utilité
+    if next_poids <= capacite:
+        exact_recursive(objects, capacite, index + 1, current_subset + [objects[index]], next_poids, next_utilite)
+
+    # Ne pas inclure l'objet à l'index actuel
+    exact_recursive(objects, capacite, index + 1, current_subset, current_poids, current_utilite)
+
+
 def exact(objects, capacite):
-    n = len(objects)
+    # Utilisation de variables globales
+    global meilleure_utilite, meilleurs_objects
+
+    # Initialisation des variables globales
     meilleure_utilite = 0
     meilleurs_objects = []
 
-    # Convertir la capacité et les poids en entiers pour éviter les problèmes de précision des flottants
-    capacite = capacite * 100
+    # Convertion de la capacité pour éviter les problèmes de flottants
+    capacite = int(capacite * 100)
 
-    # Parcours de toutes les combinaisons possibles
-    for i in range(2**n):
-        utilite = 0
-        poids = 0
-        objects_selectiones = []
-        for j in range(n):
-            if i & (1 << j):
-                poids += objects[j][1] * 100
-                utilite += objects[j][2]
-                objects_selectiones.append(objects[j])
 
-        # Comparaison entre la solution actuelle et la meilleure solution trouvée
-        if poids <= capacite and utilite > meilleure_utilite:
-            meilleure_utilite = utilite
-            meilleurs_objects = objects_selectiones
+    # 1 ère mesure du temps
+    start = time.time()
 
-    return meilleurs_objects, meilleure_utilite
+    # Appel de la fonction récursive
+    exact_recursive(objects, capacite)
+
+    # 2 ème mesure du temps
+    end = time.time()
+
+
+    # Affichage du temps d'exécution
+    print("Temps : ", end - start)
+
+    # Calcul de la masse restante
+    masse_restante = capacite - sum(objet[1] * 100 for objet in meilleurs_objects)
+    # Convertion de la masse restante en unités d'origine
+    masse_restante /= 100
+
+    return meilleurs_objects, meilleure_utilite, masse_restante
 
 
 
 # Appel de la fonction exact
-selected_objects, total_utility = exact(objects, 0.6)
+selected_objects, total_utility, masse = exact(objects, 0.8)
 
-# Affichage des objets sélectionnés ainsi que l'utilité totale
+# Affichage des objets sélectionnés ainsi que l'utilité totale et la masse restante
 print("Objets sélectionnés :")
 for obj in selected_objects:
     print(obj[0])
+
+# Affichage de l'utilité totale et de la masse restante
 print("Utilité totale :", total_utility)
+print("Masse restante :", masse)
+
 
