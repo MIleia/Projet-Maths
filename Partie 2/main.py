@@ -26,10 +26,8 @@ tableau = [
     (4, 1.5, 0.5), (2, 2.1, 1.8), (2, 0.7, 1.1), (6, 1.2, 1.3)
 ]
 
-def offlineDim1():
-    maxSize=0
-    maxTemp=0
-    maxTemp2=0
+
+def offlineDim2():
     res=[]
     resulat=[]
     utilise=[0 for y in range(len(tableau))]
@@ -38,8 +36,8 @@ def offlineDim1():
         if utilise[i]==1:
             i+=1
         else:
-            maxTemp=tableau[i][0]
-            maxTemp2=tableau[i][0]
+            maxTempl=tableau[i][0]
+            maxTemp2l=tableau[i][0]
             utilise[i]=1
             res.append(tableau[i][0])
             index=0
@@ -50,22 +48,22 @@ def offlineDim1():
             while fin == False:
                 if utilise[j] == 1:
                     ite+=1
-                elif maxTemp2+ tableau[j][0] <= lmax:
-                    maxTemp2 = maxTemp2 + tableau[j][0]
+                elif maxTemp2l+ tableau[j][0] <= lmax:
+                    maxTemp2l = maxTemp2l + tableau[j][0]
                     res.append(tableau[j][0])
                     utilise[j]=1
                     ite=0
-                elif maxTemp + tableau[j][0] <= lmax and maxTemp + tableau[j][0] > maxTemp2 and maxTemp2 + tableau[j][0] <= lmax:
+                elif maxTempl + tableau[j][0] <= lmax and maxTempl + tableau[j][0] > maxTemp2l and maxTemp2l + tableau[j][0] <= lmax:
                     if rajoute == False:
 
-                        maxTemp2 = maxTemp2 + tableau[j][0]
+                        maxTemp2l = maxTemp2l + tableau[j][0]
                         res.append(tableau[j][0])
                         rajoute = True
                         index = j
                         ite=0
                     else:
                         res.pop()
-                        maxTemp2 = maxTemp2 + tableau[j][0]
+                        maxTemp2l = maxTemp2l + tableau[j][0]
                         res.append(tableau[j][0])
                         index = j
 
@@ -81,7 +79,66 @@ def offlineDim1():
 
     return resulat
 
-print(offlineDim1())
+#print(offlineDim2())
+
+def offlineDim1():
+    res=[]
+    resulat=[]
+    utilise=[0 for y in range(len(tableau))]
+    for i in range(len(tableau)):
+        rajoute=False
+        if utilise[i]==1:
+            i+=1
+        else:
+            maxTemp=tableau[i][0]
+            maxTemp2=tableau[i][0]
+            utilise[i]=1
+            #res.append(tableau[i][0])
+            res.append(i+1)
+            index=0
+
+            fin=False
+            j = 0
+            ite=0
+            while fin == False:
+                if utilise[j] == 1:
+                    ite+=1
+                elif maxTemp2+ tableau[j][0] <= lmax:
+                    maxTemp2 = maxTemp2 + tableau[j][0]
+                    #res.append(tableau[j][0])
+                    res.append(j+1)
+                    utilise[j]=1
+                    ite=0
+                elif maxTemp + tableau[j][0] <= lmax and maxTemp + tableau[j][0] > maxTemp2 and maxTemp2 + tableau[j][0] <= lmax:
+                    if rajoute == False:
+                        maxTemp2 = maxTemp2 + tableau[j][0]
+                        #res.append(tableau[j][0])
+                        res.append(j+1)
+                        rajoute = True
+                        index = j
+                        ite=0
+                    else:
+                        res.pop()
+                        maxTemp2 = maxTemp2 + tableau[j][0]
+                        #res.append(tableau[j][0])
+                        res.append(j+1)
+                        index = j
+
+                        ite=0
+                j += 1
+                if j==len(tableau):
+                    j=0
+                if ite==len(tableau):
+                    fin=True
+            utilise[index]=1
+            resulat.append(res.copy())
+            res.clear()
+
+    return resulat
+
+print("offlineDm1 : ",offlineDim1())
+
+
 
 
 def onlineDim1V2():
