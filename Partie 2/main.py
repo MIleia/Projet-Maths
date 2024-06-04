@@ -5,6 +5,7 @@ Hmax = 2.569
 
 
 
+
 tableau = [
     (10, 1, 0.5), (9, 2, 0.7), (7.5, 1.2, 0.4), (1, 1, 1), (2, 2, 1), (11, 1, 0.2),
     (3, 2, 0.6), (3, 1.3, 1.8), (3, 2.1, 0.6), (4, 1, 0.5), (5, 0.8, 1), (6, 1.9, 1),
@@ -24,6 +25,45 @@ tableau = [
     (4, 1.5, 1.7), (3, 1.5, 1.9), (3, 0.6, 1.9), (5, 1.8, 0.5), (3, 1.8, 0.7), (4, 1.7, 1.4),
     (4, 1.5, 0.5), (2, 2.1, 1.8), (2, 0.7, 1.1), (6, 1.2, 1.3)
 ]
+
+def offlineDim1():
+    maxSize=0
+    maxTemp=0
+    maxTemp2=0
+    res=[]
+    resulat=[]
+    utilise=[0 for y in range(len(tableau))]
+    for i in range(len(tableau)):
+        rajoute=False
+        if utilise[i]==1:
+            i+=1
+        else:
+            maxTemp=tableau[i][0]
+            maxTemp2=tableau[i][0]
+            utilise[i]=1
+            res.append(tableau[i][0])
+            index=0
+            for j in range(i,len(tableau)):
+                if utilise[j]==1:
+                    j+=1
+                elif maxTemp+ tableau[j][0] <lmax and maxTemp+tableau[j][0]>maxTemp2:
+                    if rajoute==False:
+                        maxTemp2=maxTemp2+tableau[j][0]
+                        res.append(tableau[j][0])
+                        rajoute=True
+                        index=j
+                    else:
+                        res.pop()
+                        maxTemp2 = maxTemp2 + tableau[j][0]
+                        res.append(tableau[j][0])
+                        index=j
+            utilise[index]=1
+            resulat.append(res.copy())
+            res.clear()
+
+    return resulat
+
+print(offlineDim1())
 
 
 def onlineDim1V2():
