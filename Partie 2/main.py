@@ -38,22 +38,48 @@ tableau = [
     (4, 1.5, 0.5), (2, 2.1, 1.8), (2, 0.7, 1.1), (6, 1.2, 1.3)
 ]
 
+def onlineDim2():
+    conteneurs = [(0, 0)]  # Liste de tuples représentant (longueur, largeur)
+
+    # Ajout des objets aux conteneurs
+    for longueur, largeur, h in tableau:
+        dispo = True
+        for i in range(len(conteneurs)):
+            l, L = conteneurs[i]
+            if l + longueur <= lmax and L + largeur <= Lmax:
+                conteneurs[i] = (l + longueur, L + largeur)
+                dispo = False
+                break
+        if dispo:
+            conteneurs.append((longueur, largeur))
+
+    # Affichage des conteneurs
+    print("Conteneurs après ajout des objets :")
+    for conteneur in conteneurs:
+        print(conteneur)
+    print("Nombre de conteneurs utilisés :", len(conteneurs) - 1)
+
 def onlineDim3():
     conteneurs = [(0, 0, 0)]  # Liste de tuples représentant (longueur, largeur, hauteur)
 
     # Ajout des objets aux conteneurs
     for longueur, largeur, hauteur in tableau:
-        ajouté = False
+        dispo = True
         for i in range(len(conteneurs)):
             l, L, H = conteneurs[i]
             if l + longueur <= lmax and L + largeur <= Lmax and H + hauteur <= Hmax:
                 conteneurs[i] = (l + longueur, L + largeur, H + hauteur)
-                ajouté = True
+                dispo = False
                 break
-        if not ajouté:
+        if dispo:
             conteneurs.append((longueur, largeur, hauteur))
 
     # Affichage des conteneurs
     print("Conteneurs après ajout des objets :")
     for conteneur in conteneurs:
         print(conteneur)
+    print("Nombre de conteneurs utilisés :", len(conteneurs) - 1)
+
+#onlineDim1()
+#onlineDim2()
+onlineDim3()
