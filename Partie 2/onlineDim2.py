@@ -80,12 +80,9 @@ def onlineDim2(tableau, lmax, Lmax):
             wagons.append(nouveau_wagon)
 
     # Calcul de la dimension non occupée
-    dim = 0
-    for wagon in wagons:
-        for i in range(nb_cases_l):
-            for j in range(nb_cases_L):
-                if wagon[i][j] == 0:
-                    dim += 0.1
+    dim = len(wagons) * lmax * Lmax
+    for obj in tableau :
+        dim -= obj[0] * obj[1]
     print("Dimension non occupée :", round(dim, 3), "m²")
 
     return wagons
