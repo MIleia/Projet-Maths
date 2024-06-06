@@ -48,10 +48,10 @@ def onlineDim1():
 
 
 start = time.time()
-online_result = onlineDim1()
+wagons = onlineDim1()
 end = time.time()
-print("Conteneurs : ", online_result[1], "\n")
-print("Nombre de wagons : ", online_result[0])
+print("Conteneurs : ", wagons[1], "\n")
+print("Nombre de wagons : ", wagons[0])
 print("Temps d'exécution : ", round(end - start, 3), "s")
 
 
