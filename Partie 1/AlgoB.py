@@ -29,43 +29,41 @@ objects = [
 
 
 def algoB(objects, capacite):
-    start = time.time()
+    start = time.time()#on recupere le temp de début
     n = len(objects)
 
     utilPoids=[]
-    i=0
-    for i in range(len(objects)):
+    for i in range(len(objects)):#on calcule le rapport utilité/poids de chaque objet
         utilPoids.append(objects[i][2] / objects[i][1])
 
     poids=0
     utilite=0
     sacFinal=[]
-    i=0
     nbrObjets=0
-    while (poids<capacite) and (nbrObjets<n):
+    while (poids<=capacite) and (nbrObjets<n):#on fait une boucle tant que l'on a pas atteint la capacité maximale ou que l'on a pas parcouru toute la liste
         maxUtilPoids=0
-        for i in range(n-nbrObjets):
+        for i in range(n-nbrObjets):#on parcourt la liste des objets restants pour trouver l'objet qui a le meilleur rapport utilité/poids
             if utilPoids[i]>maxUtilPoids:
                 maxUtilPoids=utilPoids[i]
                 maxIndex=i
-        if poids+objects[maxIndex][1]>capacite:
+        if poids+objects[maxIndex][1]>capacite:#on vérifie que l'objet peut rentrer dans le sac sans dépasser la capacité
             objects.pop(maxIndex)
             utilPoids.pop(maxIndex)
             i = 0
             nbrObjets += 1
-        else:
+        else:#si l'objet peut rentrer dans le sac, on l'ajoute
             sacFinal.append(objects[maxIndex])
-            poids+=objects[maxIndex][1]
-            utilite+=objects[maxIndex][2]
-            objects.pop(maxIndex)
-            utilPoids.pop(maxIndex)
+            poids+=objects[maxIndex][1]#on augmente le poids total du sac
+            utilite+=objects[maxIndex][2]#on augmente l'utilité totale du sac
+            objects.pop(maxIndex)#on retire l'objet que l'on viens de mettre de la liste initiale
+            utilPoids.pop(maxIndex)#on retire la valeur de la liste rapport utilité/poids
             i=0
             nbrObjets+=1
 
 
     utiliteTot = 0
     poidsTot = 0
-    for i in range(len(sacFinal)):
+    for i in range(len(sacFinal)):#on calcul le poids et l'utilité total de la réponse
         utiliteTot = sacFinal[i][2] + utiliteTot
         poidsTot = sacFinal[i][1] + poidsTot
         print(sacFinal[i][0])
