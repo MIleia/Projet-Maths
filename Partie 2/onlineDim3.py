@@ -39,52 +39,72 @@ def onlineDim3(tableau, lmax, Lmax, Hmax):
     espace_disponible = [[[0] * nb_cases_H for _ in range(nb_cases_L)] for _ in range(nb_cases_l)]
     wagons.append(espace_disponible)
 
-    # Traitement des objets
+    # Traitement des objets, i est l'indice de l'objet, obj est l'objet
     for i, obj in enumerate(tableau):
         placee = False
 
-        # Parcourir tous les wagons pour trouver une place pour l'objet
+        # Parcours de tous les wagons pour trouver une place pour l'objet
         for wagon in wagons:
+            # Parcourir toutes les cases du wagon en longueur
             for l in range(nb_cases_l):
+                # Parcourir toutes les cases du wagon en largeur
                 for L in range(nb_cases_L):
+                    # Parcourir toutes les cases du wagon en hauteur
                     for h in range(nb_cases_H):
-                        # Vérifier si l'objet peut être placé à la position (l, L, h) dans le wagon
+                        # Dimensions de l'objet
                         obj_l, obj_L, obj_H = int(obj[0] * 10), int(obj[1] * 10), int(obj[2] * 10)
+                        # Vérifier si l'objet peut être placé à la position (l, L, h) dans le wagon
                         if l + obj_l <= nb_cases_l and L + obj_L <= nb_cases_L and h + obj_H <= nb_cases_H:
+                            # L'objet peut être placé si toutes les cases qu'il occupe sont disponibles
+                            # la variable peut_placer passe donc à True si l'objet peut être placé
                             peut_placer = True
+                            # Parcours de toutes les cases occupées par l'objet en longueur
                             for i1 in range(obj_l):
+                                # Parcours de toutes les cases occupées par l'objet en largeur
                                 for j1 in range(obj_L):
+                                    # Parcours de toutes les cases occupées par l'objet en hauteur
                                     for k1 in range(obj_H):
+                                        # Vérifier si la case est disponible
                                         if wagon[l + i1][L + j1][h + k1] != 0:
+                                            # Si la case est occupée, la variable peut_placer passe à False
                                             peut_placer = False
                                             break
-                                    if not peut_placer:
+                                    if peut_placer == False:
                                         break
-                                if not peut_placer:
+                                if peut_placer == False :
                                     break
 
+                            # Si l'objet peut être placé, le placer dans le wagon
                             if peut_placer:
-                                # Placer l'objet dans le wagon
+                                # Placement de l'objet dans le wagon
+                                # Parcours de toutes les cases occupées par l'objet en longueur
                                 for i1 in range(obj_l):
+                                    # Parcours de toutes les cases occupées par l'objet en largeur
                                     for j1 in range(obj_L):
+                                        # Parcour de toutes les cases occupées par l'objet en hauteur
                                         for k1 in range(obj_H):
-                                            wagon[l + i1][L + j1][h + k1] = i + 1
+                                            # Mise à jour du wagon en y mettant l'indice de l'objet placé
+                                            wagon[l + i1][L + j1][h + k1] = i
+                                # L'objet a été placé (placee passe à True)
                                 placee = True
                                 break
-                    if placee:
+                    if placee == True :
                         break
-                if placee:
+                if placee == True :
                     break
-            if placee:
+            if placee == True :
                 break
 
-        # Si l'objet n'a pas été placé, créer un nouveau wagon et y placer l'objet
-        if not placee:
+        # Si l'objet n'a pas été placé, création d'un nouveau wagon et y placer l'objet
+        if placee == False :
+            # Création d'un nouveau wagon
             nouveau_wagon = [[[0] * nb_cases_H for _ in range(nb_cases_L)] for _ in range(nb_cases_l)]
             for i1 in range(obj_l):
                 for j1 in range(obj_L):
                     for k1 in range(obj_H):
-                        nouveau_wagon[i1][j1][k1] = i + 1
+                        # Mise à jour du wagon en y mettant l'indice de l'objet placé
+                        nouveau_wagon[i1][j1][k1] = i
+            # Ajout du nouveau wagon à la liste des wagons
             wagons.append(nouveau_wagon)
 
     # Calcul de la dimension non occupée

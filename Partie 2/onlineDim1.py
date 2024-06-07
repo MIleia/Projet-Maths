@@ -1,10 +1,10 @@
 import time
 
-
+#initialisation des dimensions max
 lmax = 11.583
 Lmax = 2.294
 Hmax = 2.569
-
+#dimension de chaque objet: longueur, largeur, hauteur
 tableau = [
     (10, 1, 0.5), (9, 2, 0.7), (7.5, 1.2, 0.4), (1, 1, 1), (2, 2, 1), (11, 1, 0.2),
     (3, 2, 0.6), (3, 1.3, 1.8), (3, 2.1, 0.6), (4, 1, 0.5), (5, 0.8, 1), (6, 1.9, 1),
@@ -29,17 +29,23 @@ tableau = [
 
 def onlineDim1():
     conteneurs = []
+    #prend la longueur de l'objet à chaque itération
     for longueur, _, _ in tableau:
-        dispo = False
+        ajoute = False
+        #parcourt tous les wagons déjà créés
         for i in range(len(conteneurs)):
+            #Si le wagon a de la place pour l'objet alors on l'ajoute
             if conteneurs[i] + longueur <= lmax:
                 conteneurs[i] += longueur
-                dispo = True
+                ajoute = True
+                #une fois ajouté, plus besoin d'être dans la boucle
                 break
-        if dispo == False:
+        #Si l'objet est toujours disponible alos on crée un nouveau wagon
+        if ajoute == False:
             conteneurs.append(longueur)
 
     dim = 0
+    #on calcule la dimension non occupée en arrondissant au millième
     for i in range(len(conteneurs)):
         dim += lmax - conteneurs[i]
     print("Dimension non occupée :", round(dim, 3), "m")
