@@ -33,6 +33,7 @@ def offlineDim2():
     utilise=[0 for y in range(len(tableau))]
     temp=()
     temp=tableau.copy()
+    dim=0
     for i in range(len(temp)):
         temp[i].append(round(temp[i][0]*temp[i][1],3))
     temp.sort(key=lambda x: x[-1], reverse=True)
@@ -48,6 +49,7 @@ def offlineDim2():
             Ltot=sum(maxTempL)
             utilise[i]=1
             res.append(temp[i][3])
+            dim+=temp[i][0]*temp[i][1]
             for j in range(i,len(temp)):
                 if utilise[j]==1:
                     j+=1
@@ -59,16 +61,19 @@ def offlineDim2():
                             Ltot = sum(maxTempL)
                             res.append(temp[j][3])
                             utilise[j] = 1
+                            dim+=temp[j][0]*temp[j][1]
                         elif temp[j][1]+Ltot<=Lmax:
                             maxTempl.append(temp[j][0])
                             maxTempL.append(temp[j][1])
                             Ltot = sum(maxTempL)
                             res.append(temp[j][3])
                             utilise[j] = 1
+                            dim+=temp[j][0]*temp[j][1]
 
         if len(res)>0:
             resulat.append(res.copy())
             res.clear()
+    print("La dimension non occupée est de ",round((len(resulat)*(lmax*Lmax))-dim,3),"m²")
     end = time.time()
     print(round(end-start,3),'secondes')
     return resulat
@@ -85,6 +90,8 @@ def offlineDim1():
     res=[]
     resulat=[]
     utilise=[0 for y in range(len(tableau))]
+    dim=0
+    dernier=0
     for i in range(len(tableau)):
         rajoute=False
         if utilise[i]==1:
@@ -96,10 +103,10 @@ def offlineDim1():
             #res.append(tableau[i][0])
             res.append(i+1)
             index=0
-
             fin=False
             j = 0
             ite=0
+            dim+=tableau[i][0]
             while fin == False:
                 if utilise[j] == 1:
                     ite+=1
@@ -109,6 +116,8 @@ def offlineDim1():
                     res.append(j+1)
                     utilise[j]=1
                     ite=0
+                    dim+=tableau[j][0]
+                    dernier=tableau[j][0]
                 elif maxTemp + tableau[j][0] <= lmax and maxTemp + tableau[j][0] > maxTemp2 and maxTemp2 + tableau[j][0] <= lmax:
                     if rajoute == False:
                         maxTemp2 = maxTemp2 + tableau[j][0]
@@ -117,13 +126,16 @@ def offlineDim1():
                         rajoute = True
                         index = j
                         ite=0
+                        dim+=tableau[j][0]
+                        dernier=tableau[j][0]
                     else:
+                        dim=dim-dernier
                         res.pop()
                         maxTemp2 = maxTemp2 + tableau[j][0]
                         #res.append(tableau[j][0])
                         res.append(j+1)
                         index = j
-
+                        dim+=tableau[j][0]
                         ite=0
                 j += 1
                 if j==len(tableau):
@@ -133,10 +145,8 @@ def offlineDim1():
             utilise[index]=1
             resulat.append(res.copy())
             res.clear()
-    """dim=0
-    for p in range(len(resulat)):
-        dim += lmax - resulat[p]
-    print("La dimension non occupée est de ",round(dim,3),"m")"""
+
+    print("La dimension non occupée est de ",round((lmax*len(resulat))-dim,3),"m")
     end = time.time()
     print(round(end-start,3),'secondes')
     return resulat
