@@ -78,4 +78,3 @@ def offlineDim2():
     print(end-start,'secondes')#on affiche le temps utilisé pour la fonction
     return resulat#on renvoie le résultat
 
-print(offlineDim2())

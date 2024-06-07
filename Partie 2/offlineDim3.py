@@ -119,10 +119,6 @@ def offlineDim3(tableau, lmax, Lmax, Hmax):
 
     return wagons
 
-start = time.time()
-wagons = offlineDim3(tableau, lmax, Lmax, Hmax)
-end = time.time()
-print("Nombre de wagons : ", len(wagons))
-print("Temps d'exécution : ", round(end - start, 3), "s")
+
 
 

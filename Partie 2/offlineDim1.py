@@ -91,4 +91,3 @@ def offlineDim1():
     print(round(end-start,3),'secondes')#on affiche le temps utilisé pour la fonction
     return resulat
 
-print("offlineDm1 : ",offlineDim1())

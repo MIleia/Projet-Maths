@@ -1,3 +1,11 @@
+# importer la fonction onlineDim1 du fichier onlineDim1.py
+from onlineDim1 import onlineDim1
+from offlineDim1 import offlineDim1
+from onlineDim2 import onlineDim2
+from offlineDim2 import offlineDim2
+from onlineDim3 import onlineDim3
+from offlineDim3 import offlineDim3
+
 import time
 
 #initialisation des dimensions max
@@ -26,30 +34,48 @@ tableau = [
 ]
 
 
-
-def onlineDim1():
-    conteneurs = []
-    #prend la longueur de l'objet à chaque itération
-    for longueur, _, _ in tableau:
-        ajoute = False
-        #parcourt tous les wagons déjà créés
-        for i in range(len(conteneurs)):
-            #Si le wagon a de la place pour l'objet alors on l'ajoute
-            if conteneurs[i] + longueur <= lmax:
-                conteneurs[i] += longueur
-                ajoute = True
-                #une fois ajouté, plus besoin d'être dans la boucle
-                break
-        #Si l'objet est toujours disponible alos on crée un nouveau wagon
-        if ajoute == False:
-            conteneurs.append(longueur)
-
-    dim = 0
-    #on calcule la dimension non occupée en arrondissant au millième
-    for i in range(len(conteneurs)):
-        dim += lmax - conteneurs[i]
-    print("Dimension non occupée :", round(dim, 3), "m")
-
-    return len(conteneurs), conteneurs
+# Appel de la fonction onlineDim1
+print("\n\n----- onlineDim1 -----\n")
+start = time.time()
+wagons = onlineDim1()
+end = time.time()
+print("Conteneurs : ", wagons[1], "\n")
+print("Nombre de wagons : ", wagons[0])
+print("Temps d'exécution : ", round(end - start, 3), "s")
 
 
+# Appel de la fonction offlineDim1
+print("\n\n----- offlineDim1 -----\n")
+print("offlineDm1 : ",offlineDim1())
+
+
+# Appel de la fonction onlineDim2
+print("\n\n----- onlineDim2 -----\n")
+start = time.time()
+wagons = onlineDim2(tableau, lmax, Lmax)
+end = time.time()
+print("Nombre de wagons : ", len(wagons))
+print("Temps d'exécution : ", round(end - start, 3), "s")
+
+
+# Appel de la fonction offlineDim2
+print("\n\n----- offlineDim2 -----\n")
+print(offlineDim2())
+
+
+# Appel de la fonction onlineDim3
+print("\n\n----- onlineDim3 -----\n")
+start = time.time()
+wagons = onlineDim3(tableau, lmax, Lmax, Hmax)
+end = time.time()
+print("Nombre de wagons : ", len(wagons))
+print("Temps d'exécution : ", round(end - start, 3), "s")
+
+
+# Appel de la fonction offlineDim3
+print("\n\n----- offlineDim3 -----\n")
+start = time.time()
+wagons = offlineDim3(tableau, lmax, Lmax, Hmax)
+end = time.time()
+print("Nombre de wagons : ", len(wagons))
+print("Temps d'exécution : ", round(end - start, 3), "s")

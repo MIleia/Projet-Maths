@@ -102,10 +102,6 @@ def onlineDim2(tableau, lmax, Lmax):
     return wagons
 
 
-start = time.time()
-wagons = onlineDim2(tableau, lmax, Lmax)
-end = time.time()
-print("Nombre de wagons : ", len(wagons))
-print("Temps d'exécution : ", round(end - start, 3), "s")
+
 
 
