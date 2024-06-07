@@ -2,7 +2,7 @@ tablongueur = [10,9,7.5,1,2,11,3,3,3,4,5,6,7,5,6,5,4,7,9,3,5,6,7,3,1,2,4,6,7,9,6
 lmax = 11.583
 Lmax = 2.294
 Hmax = 2.569
-
+import time
 
 
 
@@ -27,6 +27,7 @@ tableau = [
 ]
 
 def offlineDim2():
+    start = time.time()
     res=[]
     resulat=[]
     utilise=[0 for y in range(len(tableau))]
@@ -68,7 +69,8 @@ def offlineDim2():
         if len(res)>0:
             resulat.append(res.copy())
             res.clear()
-
+    end = time.time()
+    print(round(end-start,3),'secondes')
     return resulat
 
 print(offlineDim2())
@@ -79,6 +81,7 @@ print(len(offlineDim2()))
 
 
 def offlineDim1():
+    start = time.time()
     res=[]
     resulat=[]
     utilise=[0 for y in range(len(tableau))]
@@ -130,10 +133,16 @@ def offlineDim1():
             utilise[index]=1
             resulat.append(res.copy())
             res.clear()
-
+    """dim=0
+    for p in range(len(resulat)):
+        dim += lmax - resulat[p]
+    print("La dimension non occupée est de ",round(dim,3),"m")"""
+    end = time.time()
+    print(round(end-start,3),'secondes')
     return resulat
 
-#print("offlineDm1 : ",offlineDim1())
+print("offlineDm1 : ",offlineDim1())
+print(len(offlineDim1()))
 
 
 
