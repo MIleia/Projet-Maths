@@ -62,24 +62,25 @@ def algoB(objects, capacite):
             i=0
             nbrObjets+=1
 
-    end = time.time()
-    print("Temps d'exécution : ", end-start)
 
+    utiliteTot = 0
+    poidsTot = 0
+    for i in range(len(sacFinal)):
+        utiliteTot = sacFinal[i][2] + utiliteTot
+        poidsTot = sacFinal[i][1] + poidsTot
+        print(sacFinal[i][0])
+    print("Utilité totale : ", round(utiliteTot, 2))
+    print("Poids total : ", round(poidsTot, 2))
+    end = time.time()
+    print("Temps d'exécution : ", end - start)
     return sacFinal
 
 
 
+algoB(objects, 2)
 
-temp=algoB(objects, 2)
-utiliteTot=0
-poidsTot=0
-for i in range (len(temp)):
-    utiliteTot=temp[i][2]+utiliteTot
-    poidsTot=temp[i][1]+poidsTot
-    print(temp[i][0])
 
-print("Utilité totale : ", round(utiliteTot,2))
-print("Poids total : ", round(poidsTot,2))
+
 
 
 
