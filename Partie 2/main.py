@@ -24,59 +24,59 @@ tableau = [
     [5, 1.4, 0.7, 85], [6, 0.7, 0.7, 86], [6, 1.2, 2, 87], [3, 1.7, 1.1, 88], [5, 1.6, 2.1, 89], [3, 1.3, 1.7, 90],
     [4, 1.5, 1.7, 91], [3, 1.5, 1.9, 92], [3, 0.6, 1.9, 93], [5, 1.8, 0.5, 94], [3, 1.8, 0.7, 95], [4, 1.7, 1.4, 96],
     [4, 1.5, 0.5, 97], [2, 2.1, 1.8, 98], [2, 0.7, 1.1, 99], [6, 1.2, 1.3, 100]
-]
+]   #contient toutes les données importantes de chaque objet dans le format suivant : [longueur, largeur, hauteur, numero]
 
 def offlineDim2():
     start = time.time()
     res=[]
     resulat=[]
-    utilise=[0 for y in range(len(tableau))]
+    utilise=[0 for y in range(len(tableau))]#on créer un tableau de la taille de tableau rempli de 0 pour vérifier si l'objet est déja placé ou non
     temp=()
     temp=tableau.copy()
     dim=0
-    for i in range(len(temp)):
+    for i in range(len(temp)):#ici on ajoute une colonne a notre tableau temp créer juste avant ou l'on stock la surface occupé par l'objet en position 4
         temp[i].append(round(temp[i][0]*temp[i][1],3))
-    temp.sort(key=lambda x: x[-1], reverse=True)
+    temp.sort(key=lambda x: x[-1], reverse=True)#on trie temp par la suface dans l'ordre décroissant
 
-    for i in range(len(temp)):
-        if utilise[i]==1:
+    for i in range(len(temp)):#on va parcourir temp
+        if utilise[i]==1:#on vérfie si l'objet est déja placé, si c'est le cas, on passe à l'objet suivant
             i+=1
         else:
             maxTempl=[]
-            maxTempl.append(temp[i][0])
+            maxTempl.append(temp[i][0])#on place le premier objet de l'itération dans notre wagon
             maxTempL=[]
-            maxTempL.append(temp[i][1])
+            maxTempL.append(temp[i][1])#on place le premier objet de l'itération dans notre wagon
             Ltot=sum(maxTempL)
-            utilise[i]=1
-            res.append(temp[i][3])
+            utilise[i]=1#on marque l'objet comme placé
+            res.append(temp[i][3])#on ajoute l'objet a notre liste de résultat temporaire
             dim+=temp[i][0]*temp[i][1]
-            for j in range(i,len(temp)):
-                if utilise[j]==1:
+            for j in range(i,len(temp)):#on va parcourir la liste temp à partir de l'objet suivant celui que l'on vient de placer jusqu'a la fin
+                if utilise[j]==1:#on verifie que cet objet n'est pas placé
                     j+=1
                 else:
-                    for k in range(len(maxTempl)):
-                        if maxTempl[k]+temp[j][0] <= lmax and maxTempL[k] >= temp[j][1]:
-                            maxTempl[k] = maxTempl[k] + temp[j][0]
-                            maxTempL[k]=max(maxTempL[k], temp[j][1])
+                    for k in range(len(maxTempl)):#on va parcourir l'ensemble des objet déja placé dans le wagon
+                        if maxTempl[k]+temp[j][0] <= lmax and maxTempL[k] >= temp[j][1]:#si l'objet rentre dans le wagon, dans la meme longueur qu'un objet déja placé
+                            maxTempl[k] = maxTempl[k] + temp[j][0]#on modifie la longueur utilisé
+                            maxTempL[k]=max(maxTempL[k], temp[j][1])#ne sert pas mais peut servir si on veut optimiser le code
                             Ltot = sum(maxTempL)
-                            res.append(temp[j][3])
+                            res.append(temp[j][3])#on ajoute l'objet a notre liste de résultat temporaire
                             utilise[j] = 1
                             dim+=temp[j][0]*temp[j][1]
-                        elif temp[j][1]+Ltot<=Lmax:
-                            maxTempl.append(temp[j][0])
-                            maxTempL.append(temp[j][1])
-                            Ltot = sum(maxTempL)
-                            res.append(temp[j][3])
+                        elif temp[j][1]+Ltot<=Lmax:#si l'objet rentre dans le wagon, sur une nouvelle largeur, sur une nouvelle longueur
+                            maxTempl.append(temp[j][0])#on créer la nouvelle longueur et on rentre sa longueur
+                            maxTempL.append(temp[j][1])#on rajoute dans le nouvelle longueur et on rentre sa largeur
+                            Ltot = sum(maxTempL)#on met a jour la largeur total des objet dans le wagon
+                            res.append(temp[j][3])#on ajoute l'objet a notre liste de résultat temporaire
                             utilise[j] = 1
-                            dim+=temp[j][0]*temp[j][1]
+                            dim+=temp[j][0]*temp[j][1]#on calcul la nouvelle surface utilisé
 
-        if len(res)>0:
+        if len(res)>0:#on met notre résultat temporaire dans notre résultat final si ce dernier n'est pas vide
             resulat.append(res.copy())
             res.clear()
-    print("La dimension non occupée est de ",round((len(resulat)*(lmax*Lmax))-dim,3),"m²")
+    print("La dimension non occupée est de ",round((len(resulat)*(lmax*Lmax))-dim,3),"m²")#on affiche la dimension non occupé
     end = time.time()
-    print(round(end-start,3),'secondes')
-    return resulat
+    print(round(end-start,3),'secondes')#on affiche le temps utilisé pour la fonction
+    return resulat#on renvoie le résultat
 
 print(offlineDim2())
 print(len(offlineDim2()))
@@ -86,31 +86,30 @@ print(len(offlineDim2()))
 
 
 def offlineDim1():
-    start = time.time()
+    start = time.time()#on prend le temps de départ
     res=[]
     resulat=[]
-    utilise=[0 for y in range(len(tableau))]
+    utilise=[0 for y in range(len(tableau))]#on créer un tableau de la taille de tableau rempli de 0 pour vérifier si l'objet est déja placé ou non
     dim=0
     dernier=0
-    for i in range(len(tableau)):
+    for i in range(len(tableau)):#on va parcourir l'ensemble des objets de notre tableau
         rajoute=False
-        if utilise[i]==1:
+        if utilise[i]==1:#si l'objet est déja placé, on passe à l'objet suivant
             i+=1
         else:
-            maxTemp=tableau[i][0]
+            maxTemp=tableau[i][0]#on rentre le premier objet dans le wagon, on stock sa longueur
             maxTemp2=tableau[i][0]
-            utilise[i]=1
-            #res.append(tableau[i][0])
-            res.append(i+1)
+            utilise[i]=1#on marque l'objet comme placé
+            res.append(i+1)#on met l'objet dans notre liste de résultat temporaire
             index=0
             fin=False
             j = 0
             ite=0
             dim+=tableau[i][0]
-            while fin == False:
-                if utilise[j] == 1:
+            while fin == False:#va nous permettre de parcourir l'ensemble des objets et de faire plusieurs fois le tours si besoin
+                if utilise[j] == 1:#si l'objet est déja placé, on passe à l'objet suivant
                     ite+=1
-                elif maxTemp2+ tableau[j][0] <= lmax:
+                elif maxTemp2+ tableau[j][0] <= lmax:#si l'objet peut renter directement dans le wagon, on le met dedans
                     maxTemp2 = maxTemp2 + tableau[j][0]
                     #res.append(tableau[j][0])
                     res.append(j+1)
@@ -119,36 +118,35 @@ def offlineDim1():
                     dim+=tableau[j][0]
                     dernier=tableau[j][0]
                 elif maxTemp + tableau[j][0] <= lmax and maxTemp + tableau[j][0] > maxTemp2 and maxTemp2 + tableau[j][0] <= lmax:
-                    if rajoute == False:
+                    #on vérifie si mettre cet objet est plus avantageux que l'objet mis en dernier dans le wagon
+                    if rajoute == False:#si cet le second objet que l'on met dans le wagon, on le met juste
                         maxTemp2 = maxTemp2 + tableau[j][0]
-                        #res.append(tableau[j][0])
-                        res.append(j+1)
-                        rajoute = True
+                        res.append(j+1)#on ajoute le numero de l'objet dans notre liste de résultat temporaire
+                        rajoute = True#on précise que maintenant on n'est plus au deuxieme objet rajouté
                         index = j
-                        ite=0
-                        dim+=tableau[j][0]
-                        dernier=tableau[j][0]
-                    else:
-                        dim=dim-dernier
-                        res.pop()
+                        ite=0#remet le compteur d'itération à 0
+                        dim+=tableau[j][0]#on met à jour la surface utilisé
+                        dernier=tableau[j][0]#on met à jour le dernier objet mis dans le wagon
+                    else:#sinon on retire le dernier objet mis dans le wagon et on met celui ci à la place
+                        dim=dim-dernier#on retire la surface de l'objet mis en dernier
+                        res.pop()#on retire le dernier objet mis dans le résultat temporaire
                         maxTemp2 = maxTemp2 + tableau[j][0]
-                        #res.append(tableau[j][0])
-                        res.append(j+1)
+                        res.append(j+1)#on met le nouvel objet dans le wagon
                         index = j
                         dim+=tableau[j][0]
                         ite=0
                 j += 1
-                if j==len(tableau):
+                if j==len(tableau):#on remet j à 0 si il dépasse la taille de tableau
                     j=0
-                if ite==len(tableau):
+                if ite==len(tableau):#si on a fait un tour complet de tableau sans rien rajouter on stop
                     fin=True
-            utilise[index]=1
-            resulat.append(res.copy())
-            res.clear()
+            utilise[index]=1#on marque le dernier objet ajouté comme placé
+            resulat.append(res.copy())#on copie notre liste de résultat temporaire dans notre résultat final
+            res.clear()#on supprime notre liste de résultat temporaire
 
-    print("La dimension non occupée est de ",round((lmax*len(resulat))-dim,3),"m")
+    print("La dimension non occupée est de ",round((lmax*len(resulat))-dim,3),"m")#on affiche notre dimension non occupée
     end = time.time()
-    print(round(end-start,3),'secondes')
+    print(round(end-start,3),'secondes')#on affiche le temps utilisé pour la fonction
     return resulat
 
 print("offlineDm1 : ",offlineDim1())
