@@ -32,11 +32,6 @@ def offlineDim2():
     utilise=[0 for y in range(len(tableau))]
     temp=()
     temp=tableau.copy()
-    """
-    maxTempl=0
-    maxTemp2l=0
-    maxTempL=0
-    maxTemp2L=0"""
     for i in range(len(temp)):
         temp[i].append(round(temp[i][0]*temp[i][1],3))
     temp.sort(key=lambda x: x[-1], reverse=True)
@@ -50,12 +45,8 @@ def offlineDim2():
             maxTempL=[]
             maxTempL.append(temp[i][1])
             Ltot=sum(maxTempL)
-            #maxTemp2l=temp[i][0]
-            #maxTemp2L=temp[i][1]
             utilise[i]=1
             res.append(temp[i][3])
-            #fin=False
-            #j=i
             for j in range(i,len(temp)):
                 if utilise[j]==1:
                     j+=1
