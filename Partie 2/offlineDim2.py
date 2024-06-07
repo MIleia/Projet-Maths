@@ -72,10 +72,10 @@ def offlineDim2():
         if len(res)>0:#on met notre résultat temporaire dans notre résultat final si ce dernier n'est pas vide
             resulat.append(res.copy())
             res.clear()
-    print("La dimension non occupée est de ",round((len(resulat)*(lmax*Lmax))-dim,3),"m²")#on affiche la dimension non occupé
     print("Le nombre de wagons utilisé est ", len(resulat))
+    print("La dimension non occupée est de ",round((len(resulat)*(lmax*Lmax))-dim,3),"m²")#on affiche la dimension non occupé
     end = time.time()
-    print(round(end-start,3),'secondes')#on affiche le temps utilisé pour la fonction
+    print(end-start,'secondes')#on affiche le temps utilisé pour la fonction
     return resulat#on renvoie le résultat
 
 print(offlineDim2())
